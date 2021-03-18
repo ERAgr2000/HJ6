@@ -25,7 +25,7 @@ public class Inventario<T extends Map>{
 		}
 		
 		//Añade un valor al mapa del inventario
-		public void add(String str, Producto producto)
+		public void add(String str, Producto producto, boolean inicio)
 		{
 			boolean existe = false;
 			try
@@ -44,11 +44,15 @@ public class Inventario<T extends Map>{
 						}
 						
 					}
-					if(!existe)
+					if(!existe && inicio)
 					{
 						
 						productos.add(producto);
 					
+					}
+					else if(!existe && !inicio)
+					{
+						throw new Exception("Error: Categoria inexistente");
 					}
 				}
 				else
@@ -62,7 +66,35 @@ public class Inventario<T extends Map>{
 			}
 		}
 		
-		public String search(String name_producto, boolean )
+		public String search(String name_producto, boolean bool )
+		{
+			String info = "";
+			try{
+				
+				Iterator llaves = inventario_info.keySet().iterator();
+				while(llaves.hasNext())
+				{
+					String llave = llaves.next().toString();
+					ArrayList<Producto> productos = (ArrayList<Producto>)inventario_info.get(llave);
+					for(Producto prod : productos)
+					{
+						if (prod.nombre == name_producto && !bool)
+						{
+							info = "El producto pertenece a la categoria " + llave;
+						}
+						else if(prod.nombre == name_producto && bool)
+						{
+							info = "El " + name_producto +" pertenece a la categoria " + llave + " y hay " + prod.cantidad.toString() + " en existencia";
+						}
+					}
+				}
+				return info;
+			}catch(Exception e)
+			{
+				
+				return "Error en serach: "+ e.toString();
+			}
+		}
 		
 		public String inventario()
 		{

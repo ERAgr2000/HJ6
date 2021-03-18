@@ -16,7 +16,7 @@ public class Main{
 	private static <G extends Map> Inventario readFile(String path, G g)
 	{
 		String data = "";
-		Inventario inventario = new Inventario<g>();
+		Inventario inventario = Inventario.create(g);
 		try 
 		{
 			File myObj = new File(path);
@@ -41,7 +41,7 @@ public class Main{
 				
 				Producto nuevo_producto = new Producto(cantidad, producto_info[1]);
 				
-				inventario.add(str[0], nuevo_producto);
+				inventario.add(producto_info[0], nuevo_producto, true);
 			}
 			myReader.close();
 		}
@@ -53,14 +53,52 @@ public class Main{
 		return inventario;
 	}
 	
+	private static boolean menu(Inventario inventario)
+	{
+		Scanner sc = new Scanner(System.in);
+		Integer opcion = sc.nextInt();
+		String prod;
+		String valor = "";
+		switch(opcion){
+			case 1:
+				
+				print("Ingrese la categoria y el nombre del producto separado por una coma: ");
+				print("Ingrese la existencia del producto: ");
+				Integer cantidad = sc.nextInt();
+				prod = sc.nextLine();
+				String[] str = prod.split(",",2);
+				inventario.add(str[0], new Producto(cantidad, str[1]),false);
+				valor = "El producto ha sido añadido con exito";
+				break;
+			case 2:
+				print("Ingrese el nombre del producto que desea buscar: ");
+				prod = sc.nextLine();
+				valor = inventario.search(prod, false);
+				break;
+			case 3:
+				print("Ingrese el nombre del producto que desea buscar: ");
+				prod = sc.nextLine();
+				valor = inventario.search(prod, true);
+				
+				break;
+			case 4:
+			case 5:
+			case 6:
+			default:
+				print("Esta saliendo del programa");
+				return true;
+			}
+			return false;
+	}
+	
 	public static void main(String args[]) throws Exception
 	{
 		//Variables
 		int opcion;
-		Inventario inventario;
 		boolean correcto = true;
 		String path = "inventario.txt";
 		Scanner sc = new Scanner(System.in);
+		Inventario inventario =readFile(path, new HashMap<String, ArrayList<Producto> >());
 		
 		while(true){
 			try{
@@ -72,18 +110,18 @@ public class Main{
 					switch(opcion) {
 					case 1:
 						
-						inventario = readFile(path, new HashMap<String, Producto>());
+						inventario = readFile(path, new HashMap<String, ArrayList<Producto> >());
 						correcto = false;
 						
 						break;
 					case 2:
 						
-						inventario = readFile(path, new TreeMap<String, Producto>());
+						inventario = readFile(path, new TreeMap<String, ArrayList<Producto>>());
 						correcto = false;
 						break;
 					case 3:
 					
-						inventario = readFile(path, new LinkedHashMap<String, Producto>());
+						inventario = readFile(path, new LinkedHashMap<String, ArrayList<Producto>>());
 						correcto = false;
 						break;
 					default:
@@ -94,35 +132,13 @@ public class Main{
 				print("Ingrese el numero de la accion que desea realizar: \n1. Agregar un producto a la coleccion \n2. Mostrar categoria de un producto \n3. Mostrar datos de un producto \n4. Mostrar datos de un producto \n5. Mostrar categoria y productos \n6. Mostrar categoria y productos ordenados ");
 				opcion = sc.nextInt();
 				while(true){
-					switch(opcion){
-					case 1:
-						
-						print("Ingrese la categoria y el nombre del producto separado por una coma: ");
-						String prod = sc.nextLine();
-						print("Ingrese la existencia del producto: ");
-						Integer cantidad = sc.nextInt();
-						
-						String[] str = prod.split(",",2);
-						inventario.add(str[0], new Producto(cantidad, str[1]));
-						break;
-					case 2:
-						
-						
-						break;
-					case 3:
-					
-						
-						break;
-					case 4:
-					case 5:
-					case 6:
-					default:
-						print("Esta saliendo del programa");
+					if(menu(inventario))
+					{
 						return;
 					}
+					
 				}
 				
-				break;
 				
 			}catch(Exception e){
 				
