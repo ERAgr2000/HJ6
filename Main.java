@@ -134,6 +134,8 @@ public class Main{
 						sc.nextLine();
 						print("Ingrese un numero");
 					}
+					//Empezamos a medir el tiempo para la creacion en el sistema del inventario
+					//long startTime = System.nanoTime();
 					switch(opcion) {
 					case 1:
 						
@@ -155,11 +157,20 @@ public class Main{
 						print("Ingrese una opcion valida");
 						break;
 					}
+					//Tiempo en que se ejecuta su método de readFile
+					//long endTime = System.nanoTime() - startTime; 
+					System.out.println(endTime);
 				}
 			
 				
 				while(true){
-					if(menu(inventario))
+					//medida inicial
+					//long startTime1 = System.nanoTime();
+					boolean salir = menu(inventario);
+					//Medida total
+					//long endTime1 = System.nanoTime() - startTime1; 
+					System.out.println(endTime1);
+					if(salir)
 					{
 						inventario.save();
 						return;

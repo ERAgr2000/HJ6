@@ -1,4 +1,22 @@
 
+Bebidas | te | 18
+Bebidas | Cerveza tibetana Barley | 1
+Bebidas | Té frios | 1
+Bebidas | Coca cola 1 litro | 1
+Bebidas | Coca cola 2 litros | 1
+Bebidas | te de la casa | 3
+Carnes | Res | 1
+Carnes | Pollo | 1
+Carnes | Cerdo | 1
+Carnes | Camarones | 1
+Carnes | Pescados | 1
+Condimentos | Sirope de regaliz | 1
+Condimentos | Especies Cajun del chef | 1
+Condimentos | Mezcla Gumbo del chef | 1
+Frutas | Peras secas | 1
+Frutas | Pasas | 1
+Frutas | Manzana roja | 1
+Frutas | Manzana verde | 1
 Lácteos | Queso de cabra | 1
 Lácteos | Queso Manchego | 1
 Lácteos | Leche descremada | 1
@@ -8,24 +26,6 @@ Mueble de terraza | Mesas de jardin | 1
 Mueble de terraza | Sillas de jardín | 1
 Mueble de terraza | Conjuntos mesas y sillas de jardín | 1
 Mueble de terraza | Mesas de Ping Pong exteriores | 1
-Bebidas | te | 15
-Bebidas | Cerveza tibetana Barley | 1
-Bebidas | Té frios | 1
-Bebidas | Coca cola 1 litro | 1
-Bebidas | Coca cola 2 litros | 1
-Bebidas | te de la casa | 3
-Condimentos | Sirope de regaliz | 1
-Condimentos | Especies Cajun del chef | 1
-Condimentos | Mezcla Gumbo del chef | 1
-Carnes | Res | 1
-Carnes | Pollo | 1
-Carnes | Cerdo | 1
-Carnes | Camarones | 1
-Carnes | Pescados | 1
-Frutas | Peras secas | 1
-Frutas | Pasas | 1
-Frutas | Manzana roja | 1
-Frutas | Manzana verde | 1
 Sillones de masaje | Cojines y colchonetas de masaje | 1
 Sillones de masaje | Sillones relax y sofás de masajes | 1
 Sillones de masaje | Sillones de masajes avanzados | 1
