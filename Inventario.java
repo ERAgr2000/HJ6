@@ -1,4 +1,6 @@
 import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Inventario<T extends Map>{
 		
@@ -32,13 +34,16 @@ public class Inventario<T extends Map>{
 			{
 				ArrayList<Producto> productos = new ArrayList();
 				
-				if(inventario_info.containsKey(str))
+				if(inventario_info.containsKey(str.trim()))
 				{
+					
 					productos = (ArrayList<Producto>)inventario_info.get(str);
 					for (Producto prod : productos)
 					{
-						if(prod.nombre == producto.nombre)
+						
+						if(prod.nombre.trim().equalsIgnoreCase(producto.nombre.trim()))
 						{
+							
 							prod.cantidad = prod.cantidad + producto.cantidad;
 							existe = true;							
 						}
@@ -52,12 +57,19 @@ public class Inventario<T extends Map>{
 					}
 					else if(!existe && !inicio)
 					{
-						throw new Exception("Error: Categoria inexistente");
+						productos.add(producto);
+						
 					}
+				}
+				else if(inicio)
+				{
+					productos.add(producto);
 				}
 				else
 				{
-					productos.add(producto);
+					
+					throw new Exception("Error: Categoria inexistente");
+				
 				}
 				inventario_info.put(str, productos);
 			}catch(Exception e)
@@ -68,7 +80,7 @@ public class Inventario<T extends Map>{
 		
 		public String search(String name_producto, boolean bool )
 		{
-			String info = "";
+			String info = "No se encontro el prodcuto.";
 			try{
 				
 				Iterator llaves = inventario_info.keySet().iterator();
@@ -78,7 +90,7 @@ public class Inventario<T extends Map>{
 					ArrayList<Producto> productos = (ArrayList<Producto>)inventario_info.get(llave);
 					for(Producto prod : productos)
 					{
-						if (prod.nombre == name_producto && !bool)
+						if (prod.nombre.trim().equalsIgnoreCase(name_producto.trim()) && !bool)
 						{
 							info = "El producto pertenece a la categoria " + llave;
 						}
@@ -96,14 +108,70 @@ public class Inventario<T extends Map>{
 			}
 		}
 		
-		public String inventario()
+		public String showInventario(Integer caso)
 		{
-			String list_inventario;
-			for(int i = 0; i < inventario_info.size(); i = i+1)
+			String info = "";
+			try{
+				
+				Iterator llaves = inventario_info.keySet().iterator();
+				while(llaves.hasNext())
+				{
+					String llave = llaves.next().toString();
+					ArrayList<Producto> productos = (ArrayList<Producto>)inventario_info.get(llave);
+					for(Producto prod : productos)
+					{
+						switch(caso)
+						{
+							case 1:
+								info = info + "\nEl prodcuto " + prod.nombre +" pertenece a la categoria " + llave + " y hay " + prod.cantidad.toString() + " en existencia";
+								break;
+							case 2:
+								info = info + "\nA la categoria " + llave + " pertenece " + prod.nombre + " y hay " + prod.cantidad.toString() + " en existencia";
+								break;
+							case 3:
+								info = info + "\nEl producto " + prod.nombre + " pertenece a la categoria " + llave;
+								break;
+							case 4:
+								info = info + "\nA la categoria " + llave + " pertenece " + prod.nombre;
+								break;
+						}
+					}
+				}
+				return info;
+			}catch(Exception e)
 			{
-				Iterator it1 = inventario_info.keySet().iterator();
-				Iterator it2 = inventario_info.values().iterator();
+				
+				return "Error al mostrar inventario: "+ e.toString();
+			
 			}
-			return "";
+		}
+		
+		public void save()
+		{
+			try
+			{
+				String inv = "";
+				
+				Iterator llaves = inventario_info.keySet().iterator();
+				while(llaves.hasNext())
+				{
+					String llave = llaves.next().toString();
+					ArrayList<Producto> productos = (ArrayList<Producto>)inventario_info.get(llave);
+					
+					for(Producto prod : productos)
+					{
+						inv = inv + "\n"+llave.toString() + " | "+prod.nombre +" | " + prod.cantidad;
+					}
+				}
+				
+				FileWriter myWriter = new FileWriter("inventario.txt");
+				myWriter.write(inv);
+				myWriter.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("Error al guardar inventario");
+			}
+			
 		}
 } 	
